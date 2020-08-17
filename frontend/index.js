@@ -6,28 +6,28 @@ function TodoBlock() {
     const base = useBase();
     const globalConfig = useGlobalConfig();
     const tableId = globalConfig.get('selectedTableId');
-    const completedFieldId = globalConfig.get('completedFieldId');
+    let completedFieldId = globalConfig.get('completedFieldId');
 
     const table = base.getTableByIdIfExists(tableId);
     const completedField = table ? table.getFieldByIdIfExists(completedFieldId) : null;
     
     const toggle = (record) => {
         table.updateRecordAsync(
-            record, {[completedFieldId]: !record.getCellValue(completedFieldId)}
+            record, {[completedFieldId]: !record.getCellValue(completedField)}
         );
     };    
 
     const records = useRecords(table);
 
-    const tasks = records && completedFieldId ? records.map(record => (
-        <Task key={record.id} record={record} onToggle={toggle} completedFieldId={completedFieldId} />
+    const tasks = records && completedField ? records.map(record => (
+        <Task key={record.id} record={record} onToggle={toggle} completedFieldId={completedField} />
    )) : null;
 
 
     return (
         <div>
             <TablePickerSynced globalConfigKey="selectedTableId" />
-            <FieldPickerSynced table={table} globalConfigKey="completedFieldId" />           
+            <FieldPickerSynced table={table} globalConfigKey="completedFieldId" />
             {tasks}
         </div>
     )
