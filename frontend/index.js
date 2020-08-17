@@ -6,7 +6,7 @@ function TodoBlock() {
     const base = useBase();
     const globalConfig = useGlobalConfig();
     const tableId = globalConfig.get('selectedTableId');
-    let completedFieldId = globalConfig.get('completedFieldId');
+    const completedFieldId = globalConfig.get('completedFieldId');
 
     const table = base.getTableByIdIfExists(tableId);
     const completedField = table ? table.getFieldByIdIfExists(completedFieldId) : null;
